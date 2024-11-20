@@ -6,6 +6,7 @@ import "./App.css";
 function App() {
   // const [count, setCount] = useState(0)
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [selected, setSelected] = useState({});
   const [title, setTitle] = useState('')
 
@@ -17,12 +18,13 @@ function App() {
 
   useEffect(() => {
     const filteredData = data.filter(val => val.title.includes(title));
-    setData(filteredData)
+    setFilteredData(filteredData)
   }, [data, title])
 
   useEffect(() => {
     fetchData().then((res) => {
       setData(res);
+      setFilteredData(res);
     });
   }, []);
 
@@ -67,9 +69,9 @@ function App() {
       </div>
 
       <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-        {data &&
-          data.length > 0 &&
-          data.map(({ id, title, userId, body }) => (
+        {filteredData &&
+          filteredData.length > 0 &&
+          filteredData.map(({ id, title, userId, body }) => (
             <div
               key={id}
               style={{
